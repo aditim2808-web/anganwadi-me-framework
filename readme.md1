@@ -1,0 +1,141 @@
+# Evaluation Design: Intensified Nutrition Counselling under ICDS
+### Monitoring & Evaluation Framework — Integrated Child Development Services, India
+
+## Overview
+This project presents a monitoring and evaluation framework for a 
+cluster-randomised evaluation of intensified nutrition counselling 
+delivered through Anganwadi Workers (AWWs) under India's Integrated 
+Child Development Services (ICDS). The framework covers theory of 
+change, survey instrument design, and sample size determination 
+with clustering adjustments.
+
+## Intervention Description
+The intervention consists of monthly structured counselling sessions 
+delivered by Anganwadi Workers focusing on infant and young child 
+feeding (IYCF) practices, dietary diversity, exclusive breastfeeding, 
+and hygiene behaviours. Treatment households receive individualised 
+counselling at the Anganwadi centre and at least one home visit per 
+month for high-risk children. Control households receive standard 
+ICDS services without the structured counselling protocol.
+
+## Research Question
+Does intensified nutrition counselling by Anganwadi Workers improve 
+child nutritional status — as measured by weight-for-age Z-scores 
+(WAZ) — among children aged 6-23 months over a 12-month period, 
+compared to standard ICDS services?
+
+## Why WAZ and Why 6-23 Months?
+WAZ was selected as the primary outcome because it responds faster 
+to nutritional interventions than height-for-age Z-scores (HAZ). 
+Stunting (HAZ) accumulates over years and is unlikely to show 
+measurable change within a 12-month evaluation window. The 6-23 
+month age window captures the critical complementary feeding period 
+— the most modifiable part of the 1,000-day window — where 
+counselling interventions have the strongest evidence base.
+
+## Project Components
+
+### 1. Theory of Change
+Located in docs/theory_of_change.md
+
+**Inputs:** Trained AWWs, structured counselling curriculum, growth 
+monitoring equipment, supplementary nutrition, supervisory support
+
+**Activities:** Monthly group counselling sessions, individual 
+counselling for high-risk children, growth monitoring and promotion, 
+health referrals, home visits
+
+**Outputs** (measurable, short-term):
+- Number of counselling sessions delivered
+- Number of caregivers attending sessions
+- Number of children weighed monthly
+- Number of children referred for treatment
+
+**Outcomes** (medium-term, 6-18 months):
+- Improved caregiver knowledge of IYCF practices
+- Increased dietary diversity scores
+- Improved WAZ among children 6-23 months
+- Reduced anaemia prevalence
+
+**Impact** (long-term, 2-5 years):
+- Reduced stunting and underweight prevalence
+- Improved child cognitive development outcomes
+
+### 2. Process Monitoring Indicators
+- Proportion of scheduled counselling sessions delivered
+- Caregiver attendance rates at group sessions
+- Average counselling duration per session
+- Frequency of home visits for high-risk children
+- Take-home ration stockout rates
+- AWW supervision visit completion rates
+
+### 3. Survey Instrument
+Located in docs/survey_instrument.xlsx (KoBoToolbox export)
+
+The survey instrument contains five modules:
+- Household identification
+- Child characteristics
+- Caregiver IYCF knowledge (assessed against standardised 
+  knowledge indicators)
+- Child dietary diversity (WHO Minimum Dietary Diversity Score, 
+  0-7 food groups, 24-hour recall)
+- Anthropometry (weight, height, MUAC for WAZ/HAZ calculation)
+
+Designed for mobile-based data collection using KoBoToolbox.
+Z-scores calculated post-collection using WHO zscorer package in R.
+
+### 4. Power Calculations
+Located in scripts/01_power_calculations.R
+
+Key parameters:
+- Outcome: Weight-for-age Z-score (WAZ)
+- Baseline mean WAZ: -1.6, SD: 1.2 (NFHS-5, 2019-21)
+- Minimum detectable effect: 0.15 SD
+- Significance level: 0.05, Power: 80%
+
+Results:
+- Without clustering: 699 per arm, 1,398 total
+- ICC = 0.05, cluster size = 20 children per centre
+- Design effect = 1.95
+- Adjusted sample: 1,363 per arm, 2,726 total
+- Clusters needed: 69 per arm, 138 Anganwadi centres total
+
+Ignoring clustering would underpower the study by nearly half — 
+a common design error in field studies that this framework 
+explicitly corrects for.
+
+## Field Considerations
+- Social desirability bias in caregiver responses to IYCF 
+  knowledge questions — mitigated through vignette-based questions
+- Seasonal variation in food availability affects dietary 
+  diversity scores — baseline and endline should be conducted 
+  in the same season
+- Measurement error in anthropometry — enumerator standardisation 
+  training and duplicate measurements required
+- Attrition due to migration — common in peri-urban Anganwadi 
+  catchments; intention-to-treat analysis recommended
+- Contamination risk — randomisation at Anganwadi centre level 
+  minimises but does not eliminate spillovers between nearby centres
+
+## Key Design Decisions
+1. Cluster randomisation at Anganwadi centre level — avoids 
+   contamination between treatment and control children
+2. Design effect of 1.95 accounts for within-cluster correlation
+3. WHO Dietary Diversity Score as secondary outcome — 
+   validated and comparable across studies
+4. MUAC included for acute malnutrition screening — actionable 
+   for referral decisions independent of Z-score calculation
+
+## Limitations
+1. Hypothetical framework — no actual data collection conducted
+2. ICC assumption (0.05) based on published literature; 
+   actual ICC should be estimated from pilot data
+3. 12-month follow-up insufficient to detect stunting changes — 
+   HAZ responds more slowly than WAZ
+4. No cost estimation — full M&E framework would require 
+   budget and cost-effectiveness analysis
+
+## Requirements
+R 4.5+
+Packages: pwr, tidyverse
+Survey design: KoBoToolbox (kobotoolbox.org)
