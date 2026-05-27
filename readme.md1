@@ -127,7 +127,7 @@ explicitly corrects for.
    for referral decisions independent of Z-score calculation
 
 ## Limitations
-1. Hypothetical framework — no actual data collection conducted
+1. Hypothetical framework — designed as an evaluation-ready framework using published NFHS-5 parameters.
 2. ICC assumption (0.05) based on published literature; 
    actual ICC should be estimated from pilot data
 3. 12-month follow-up insufficient to detect stunting changes — 
